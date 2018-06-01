@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/1999/xheml">
+<head>
+    <meta charset="UTF-8" content="text/html; charset=UTF-8">
+    <title>Title</title>
+    <script src="../jquery-1.11.3.min.js"></script>
+</head>
+<body>
+<form action="/update" method="post">
+    <input type="hidden" name="_method" th:value="PUT"/>
+    <input type="hidden" name="userId" th:value="*{user.userId}"/>
+    <br/>
+    姓名：<input name="userName" th:value="*{user.userName}"/>
+    <br/>
+    年龄:<input name="userAge" th:value="*{user.userAge}"/>
+    <br/>
+    性别:<input type="radio" name="userSex" value="1" th:checked="${user.userSex}==1"/>男
+         <input type="radio" name="userSex" value="2" th:checked="${user.userSex}==2"/>女
+    <br/>
+    住址:<input type="text" name="userAddress" th:value="*{user.userAddress}">
+    <br/>
+    生日:<input name="bir" th:value="${#dates.format(user.userBir, 'yyyy-MM-dd')}"/>
+    <br/>
+    <input type="submit"/>
+</body>
+</html>

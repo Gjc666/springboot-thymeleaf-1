@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/1999/xheml">
+<head>
+    <meta charset="UTF-8" content="text/html; charset=UTF-8">
+    <title>Title</title>
+    <script src="../jquery-1.11.3.min.js"></script>
+</head>
+<body>
+<center>
+        <h1>查询页面</h1>
+    <a href="/addPage">新增</a>
+    <table border="1">
+        <tr>
+            <th>编号</th>
+            <th>姓名</th>
+            <th>年龄</th>
+            <th>性别</th>
+            <th>地址</th>
+            <th>生日</th>
+            <th>操作</th>
+        </tr>
+        <tr th:each="list:${list}">
+            <td th:text="${list.userId}"></td>
+            <td th:text="${list.userName}"></td>
+            <td th:text="${list.userAge}"></td>
+            <td th:if="${list.userSex==1}">男</td>
+            <td th:if="${list.userSex==2}">女</td>
+            <td th:text="${list.userAddress}"></td>
+            <td th:text="${#dates.format(list.userBir, 'yyyy-MM-dd')}"></td>
+            <td>
+                <a th:href="'javascript:del('+${list.userId}+')'">删除</a>
+                <a th:href="@{toUpdatePage/{userId}(userId=${list.userId})}">修改</a>
+            </td>
+        </tr>
+    </table>
+</center>
+    <form id="formId" METHOD="post">
+    <input type="hidden" name="_method" th:value="DELETE"/>
+    </form>
+    <script>
+        function del(id){
+            $("#formId").prop("action","/delete/"+id);
+            $("#formId").submit();
+        }
+    </script>
+</body>
+</html>
