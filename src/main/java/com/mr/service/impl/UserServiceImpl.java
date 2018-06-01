@@ -4,6 +4,8 @@ import com.mr.mapper.UserMapper;
 import com.mr.model.User;
 import com.mr.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +21,7 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
 
     @Override
+    @Cacheable(value = "user", key="1")
     public List<User> userList() {
         return userMapper.selectByExample(null);
     }
@@ -31,6 +34,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     @Transactional
+    @CacheEvict(value = "user",allEntries = true)
     public void addUser(User user) {
         userMapper.insertSelective(user);
     }
@@ -41,6 +45,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     @Transactional
+    @CacheEvict(value = "user",allEntries = true)
     public void delUser(Integer id) {
         userMapper.deleteByPrimaryKey(id);
     }
@@ -57,6 +62,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
+    @CacheEvict(value = "user",allEntries = true)
     public void update(User user) {
         userMapper.updateByPrimaryKeySelective(user);
     }
